@@ -1,6 +1,6 @@
 "use strict";
 
-const Set = use("App/Models/Set");
+const Set = use("App/Models/User");
 
 class SetsController {
   index(request) {
