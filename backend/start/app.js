@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /*
 |--------------------------------------------------------------------------
@@ -11,12 +11,12 @@
 |
 */
 const providers = [
-  '@adonisjs/framework/providers/AppProvider',
-  '@adonisjs/auth/providers/AuthProvider',
-  '@adonisjs/bodyparser/providers/BodyParserProvider',
-  '@adonisjs/cors/providers/CorsProvider',
-  '@adonisjs/lucid/providers/LucidProvider'
-]
+  "@adonisjs/framework/providers/AppProvider",
+  "@adonisjs/auth/providers/AuthProvider",
+  "@adonisjs/bodyparser/providers/BodyParserProvider",
+  "@adonisjs/cors/providers/CorsProvider",
+  "@adonisjs/lucid/providers/LucidProvider",
+];
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +27,7 @@ const providers = [
 | Providers for migrations, tests etc.
 |
 */
-const aceProviders = [
-  '@adonisjs/lucid/providers/MigrationsProvider'
-]
+const aceProviders = ["@adonisjs/lucid/providers/MigrationsProvider"];
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +41,21 @@ const aceProviders = [
 |   { Route: 'Adonis/Src/Route' }
 |
 */
-const aliases = {}
+const aliases = {
+  Answer: "App/Models/Answer",
+  Chat: "App/Models/Chat",
+  ChatMessage: "App/Models/ChatMessage",
+  GameInstance: "App/Models/GameInstance",
+  GameTemplate: "App/Models/GameTemplate",
+  Image: "App/Models/Image",
+  Point: "App/Models/Point",
+  Question: "App/Models/Question",
+  QuestionSet: "App/Models/QuestionSet",
+  Round: "App/Models/Round",
+  Team: "App/Models/Team",
+  Token: "App/Models/Token",
+  User: "App/Models/User",
+};
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +65,6 @@ const aliases = {}
 | Here you store ace commands for your package
 |
 */
-const commands = []
+const commands = [];
 
-module.exports = { providers, aceProviders, aliases, commands }
+module.exports = { providers, aceProviders, aliases, commands };
