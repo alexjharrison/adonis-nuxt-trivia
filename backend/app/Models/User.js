@@ -38,14 +38,6 @@ class User extends Model {
   tokens() {
     return this.hasMany("App/Models/Token");
   }
-
-  teams() {
-    return this.belongsToMany("App/Models/Team");
-  }
-
-  chatMessages() {
-    return this.hasMany("App/Models/ChatMessage");
-  }
 }
 
 module.exports = User;
