@@ -8,11 +8,8 @@ class PointsSchema extends Schema {
     this.create("points", (table) => {
       table.increments();
       table.integer("value").unsigned().notNullable();
-      table
-        .integer("round_teams_id")
-        .unsigned()
-        .references("id")
-        .inTable("round_teams");
+      table.integer("round_id").unsigned().references("id").inTable("rounds");
+      table.integer("team_id").unsigned().references("id").inTable("teams");
       table.timestamps();
     });
   }
