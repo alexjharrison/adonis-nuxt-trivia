@@ -12,7 +12,7 @@ class GameInstanceSchema extends Schema {
         .unsigned()
         .references("id")
         .inTable("game_templates");
-      table.integer("created_by").unsigned().references("id").inTable("users");
+      table.integer("user_id").unsigned().references("id").inTable("users");
       table.timestamps();
     });
   }

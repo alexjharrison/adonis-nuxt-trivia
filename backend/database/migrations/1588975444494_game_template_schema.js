@@ -8,7 +8,7 @@ class GameTemplateSchema extends Schema {
     this.create("game_templates", (table) => {
       table.increments();
       table.string("name").notNullable();
-      table.integer("user_id").unsigned().notNullable();
+      table.integer("user_id").unsigned().references("id").inTable("users");
       table.timestamps();
     });
   }

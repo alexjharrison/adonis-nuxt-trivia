@@ -22,3 +22,8 @@ Route.group(() => {
   Route.post("login", "AuthController.login");
   Route.post("register", "AuthController.register");
 }).prefix("auth");
+
+Route.resource("game-templates", "GameTemplateController")
+  .apiOnly()
+  .middleware(["auth"])
+  .formats(["json"]);

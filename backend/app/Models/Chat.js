@@ -2,15 +2,14 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use("Model");
-const ChatMessage = use("ChatMessage");
 
 class Chat extends Model {
   chatMessages() {
-    return this.hasMany(ChatMessage);
+    return this.hasMany("ChatMessage");
   }
 
   team() {
-    return this.belongsTo(Team);
+    return this.belongsTo("Team");
   }
 }
 

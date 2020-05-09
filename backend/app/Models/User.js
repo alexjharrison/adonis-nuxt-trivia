@@ -39,8 +39,20 @@ class User extends Model {
     return this.hasMany("Token");
   }
 
-  gameInstance() {
-    return this.hasOne("App");
+  gameInstances() {
+    return this.hasMany("GameInstance");
+  }
+
+  gameTemplates() {
+    return this.hasMany("GameTemplate");
+  }
+
+  teams() {
+    return this.belongsToMany("Team");
+  }
+
+  chatMessages() {
+    return this.hasMany("ChatMessage");
   }
 }
 
