@@ -10,10 +10,11 @@ class QuestionSchema extends Schema {
       table.string("question_text").notNullable();
       table.integer("question_number").unsigned().notNullable();
       table
-        .integer("question_set")
+        .integer("question_set_id")
         .unsigned()
         .references("id")
-        .inTable("question_sets");
+        .inTable("question_sets")
+        .onDelete("cascade");
       table.timestamps();
     });
   }

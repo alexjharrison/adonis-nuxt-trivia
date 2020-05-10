@@ -9,18 +9,30 @@ class GameTemplateController {
   questionNumber = 1;
 
   // get all
-  async index({ request }) {
-    return "index";
+  async index() {
+    return this.GameTemplate.query()
+      .with("rounds.questionSets.questions.answers")
+      .fetch();
   }
 
   // get one
-  async show({ request }) {
-    return "show";
+  async show({ params }) {
+    return this.GameTemplate.query()
+      .with("rounds.questionSets.questions.answers")
+      .where("id", params.id)
+      .fetch();
   }
 
   // patch one
-  async update({ request }) {
-    return "update";
+  async update({ request, params }) {
+    const template = await this.GameTemplate.with(
+      "rounds.questionSets.questions.answers"
+    )
+      .where("id", params.id)
+      .fetch()
+      .toJSON();
+    console.log(template);
+    return template;
   }
 
   // post one
@@ -28,67 +40,53 @@ class GameTemplateController {
     const user = await this.User.find(auth.user.id);
     const { name, rounds } = request.body;
 
-    const gameTemplate = new this.GameTemplate();
-    gameTemplate.name = name;
-    await user.gameTemplates().save(gameTemplate);
+    const gameTemplate = await user.gameTemplates().create({
+      name,
+    });
 
-    const newRounds = await this.createRounds(rounds);
-    await gameTemplate.rounds().saveMany(newRounds);
+    rounds.map(async (round, i) => {
+      const roundModel = await gameTemplate.rounds().create({
+        type: round.type,
+        round_number: i + 1,
+      });
+
+      round.questionSets.map(async (questionSet) => {
+        const questionSetModel = await roundModel.questionSets().create({
+          category: questionSet.category,
+          question_number: this.questionNumber++,
+        });
+
+        questionSet.questions.map(async (question, i) => {
+          const questionModel = await questionSetModel.questions().create({
+            question_text: question.questionText,
+            question_number: i + 1,
+          });
+
+          question.answers.map(async (answer, i) => {
+            await questionModel.answers().create({
+              max_points: answer.maxPoints,
+              min_points: answer.minPoints,
+              answer_text: answer.answerText,
+              will_deduct: answer.willDeduct,
+              answer_number: i + 1,
+            });
+          });
+        });
+      });
+    });
 
     return this.GameTemplate.query()
       .where("id", gameTemplate.id)
-      .with("rounds.questionSets")
+      .with("rounds.questionSets.questions.answers")
       .fetch();
   }
 
   // delete one
-  async destroy({ request }) {
-    return "destroy";
+  async destroy({ params }) {
+    const gameTemplate = await this.GameTemplate.findOrFail(params.id);
+    await gameTemplate.delete();
+    return gameTemplate;
   }
-
-  createRounds(rounds) {
-    return Promise.all(
-      rounds.map(async (round, i) => {
-        const newRound = new this.Round();
-        newRound.type = round.type;
-        newRound.round_number = i + 1;
-        if (newRound.imageIds && newRound.imageIds.length > 0)
-          await newRound.photos().attach(newRound.imageIds);
-
-        const questionSets = await this.createQuestionSets(round.questionSets);
-        await newRound.questionSets().saveMany(questionSets);
-        return newRound;
-      })
-    );
-  }
-  createQuestionSets(questionSets) {
-    return Promise.all(
-      questionSets.map(async (questionSet, i) => {
-        const newQuestionSet = new this.QuestionSet();
-        newQuestionSet.category = questionSet.category;
-        newQuestionSet.question_number = this.questionNumber++;
-
-        const questions = await this.createQuestions(questionSet.questions);
-        console.log(questions);
-        await newQuestionSet.questions().saveMany(questions);
-        return newQuestionSet;
-      })
-    );
-  }
-  createQuestions(questions) {
-    return Promise.all(
-      questions.map(async (question, i) => {
-        const newQuestion = new this.Question();
-        newQuestion.question_text = question.questionText;
-        newQuestion.question_number = i + 1;
-
-        // const answers = await this.createAnswers(question.answers);
-        // await question.answers().saveMany(answers);
-        return newQuestion;
-      })
-    );
-  }
-  createAnswers(answers) {}
 }
 
 module.exports = GameTemplateController;

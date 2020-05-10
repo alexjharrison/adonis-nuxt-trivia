@@ -8,7 +8,12 @@ class QuestionSetSchema extends Schema {
     this.create("question_sets", (table) => {
       table.increments();
       table.integer("question_number").unsigned().notNullable();
-      table.integer("round_id").unsigned().references("id").inTable("rounds");
+      table
+        .integer("round_id")
+        .unsigned()
+        .references("id")
+        .inTable("rounds")
+        .onDelete("cascade");
       table.string("category").notNullable();
       table.timestamps();
     });

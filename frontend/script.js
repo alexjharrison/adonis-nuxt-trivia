@@ -30,7 +30,7 @@ const data = {
 
 document.querySelector("#button").addEventListener("click", (e) => {
   postData({
-    url: "http://localhost:3333/game-templates",
+    url: "http://localhost:3333/game-templates/",
     data,
   }).then((data) => {
     console.log(data);

@@ -16,7 +16,8 @@ class AnswerSchema extends Schema {
         .integer("question_id")
         .unsigned()
         .references("id")
-        .inTable("questions");
+        .inTable("questions")
+        .onDelete("cascade");
       table.timestamps();
     });
   }

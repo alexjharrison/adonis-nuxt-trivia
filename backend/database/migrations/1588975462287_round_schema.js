@@ -12,7 +12,8 @@ class RoundSchema extends Schema {
         .integer("game_template_id")
         .unsigned()
         .references("id")
-        .inTable("game_templates");
+        .inTable("game_templates")
+        .onDelete("cascade");
       table.integer("round_number").unsigned().notNullable();
       table.timestamps();
     });
