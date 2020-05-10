@@ -1,23 +1,55 @@
 console.log("hi");
 
 const data = {
-  name: "Alex",
+  id: 1,
+  name: "Jim",
+  user_id: 1,
+  created_at: "2020-05-10 18:17:19",
+  updated_at: "2020-05-10 18:24:49",
   rounds: [
     {
+      id: 1,
       type: "standard",
-      imageIds: [],
+      game_template_id: 1,
+      round_number: 1,
+      created_at: "2020-05-10 18:17:19",
+      updated_at: "2020-05-10 18:17:19",
+      questionSets: [],
+    },
+    {
+      id: 1,
+      type: "standard",
+      game_template_id: 1,
+      round_number: 1,
+      created_at: "2020-05-10 18:17:19",
+      updated_at: "2020-05-10 18:17:19",
       questionSets: [
         {
-          category: "Balls",
+          id: 1,
+          question_number: 1,
+          round_id: 1,
+          category: "Bools",
+          created_at: "2020-05-10 18:17:19",
+          updated_at: "2020-05-10 18:17:19",
           questions: [
             {
-              questionText: "What are balls",
+              id: 1,
+              question_text: "What are balls",
+              question_number: 1,
+              question_set_id: 1,
+              created_at: "2020-05-10 18:17:19",
+              updated_at: "2020-05-10 18:17:19",
               answers: [
                 {
-                  answerText: "balls",
-                  willDeduct: false,
-                  maxPoints: 27,
-                  minPoints: 27,
+                  id: 1,
+                  max_points: 27,
+                  min_points: 27,
+                  answer_text: "balls",
+                  answer_number: 1,
+                  will_deduct: false,
+                  question_id: 1,
+                  created_at: "2020-05-10 18:17:19",
+                  updated_at: "2020-05-10 18:17:19",
                 },
               ],
             },

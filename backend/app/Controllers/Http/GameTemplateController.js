@@ -6,33 +6,73 @@ class GameTemplateController {
   Round = use("Round");
   QuestionSet = use("QuestionSet");
   Question = use("Question");
+  Answer = use("Answer");
   questionNumber = 1;
 
   // get all
-  async index() {
-    return this.GameTemplate.query()
-      .with("rounds.questionSets.questions.answers")
-      .fetch();
+  async index({ auth }) {
+    if (auth.user.is_admin) {
+      return this.GameTemplate.query()
+        .with("rounds.questionSets.questions.answers")
+        .fetch();
+    } else
+      return this.GameTemplate.query()
+        .with("rounds.questionSets.questions.answers")
+        .where("user_id", 1)
+        .fetch();
   }
 
   // get one
-  async show({ params }) {
+  async show({ params, auth }) {
     return this.GameTemplate.query()
       .with("rounds.questionSets.questions.answers")
       .where("id", params.id)
+      .where("user_id", auth.user.id)
       .fetch();
   }
 
   // patch one
   async update({ request, params }) {
-    const template = await this.GameTemplate.with(
-      "rounds.questionSets.questions.answers"
-    )
-      .where("id", params.id)
-      .fetch()
-      .toJSON();
-    console.log(template);
-    return template;
+    const { name, rounds } = request.body;
+    if (name) {
+      await this.GameTemplate.query().where("id", params.id).update({ name });
+      rounds.map(async (round, i) => {
+        const { id, type } = round;
+        await this.Round.query()
+          .where("id", id)
+          .update({ type, round_number: i + 1 });
+        round.questionSets.map(async (questionSet) => {
+          const { category, id } = questionSet;
+          await this.QuestionSet.query().where("id", id).update({ category });
+          questionSet.questions.map(async (question, i) => {
+            const { id, question_text } = question;
+            await this.Question.query()
+              .where("id", id)
+              .update({ question_text, question_number: i + 1 });
+            question.answers.map(async (answer, i) => {
+              const {
+                id,
+                max_points,
+                min_points,
+                answer_text,
+                will_deduct,
+              } = answer;
+              await this.Answer.query()
+                .where("id", id)
+                .update({
+                  max_points,
+                  min_points,
+                  answer_text,
+                  will_deduct,
+                  answer_number: i + 1,
+                });
+            });
+          });
+        });
+      });
+    }
+
+    return true;
   }
 
   // post one
@@ -58,16 +98,16 @@ class GameTemplateController {
 
         questionSet.questions.map(async (question, i) => {
           const questionModel = await questionSetModel.questions().create({
-            question_text: question.questionText,
+            question_text: question.question_text,
             question_number: i + 1,
           });
 
           question.answers.map(async (answer, i) => {
             await questionModel.answers().create({
-              max_points: answer.maxPoints,
-              min_points: answer.minPoints,
-              answer_text: answer.answerText,
-              will_deduct: answer.willDeduct,
+              max_points: answer.max_points,
+              min_points: answer.min_points,
+              answer_text: answer.answer_text,
+              will_deduct: answer.will_deduct,
               answer_number: i + 1,
             });
           });

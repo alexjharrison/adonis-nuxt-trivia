@@ -8,6 +8,7 @@ class UserSchema extends Schema {
   up() {
     this.create("users", (table) => {
       table.increments();
+      table.boolean("is_admin").notNullable().defaultsTo(false);
       table.string("username", 80).notNullable().unique();
       table.string("email", 254).notNullable().unique();
       table.string("password", 60).notNullable();
@@ -18,6 +19,7 @@ class UserSchema extends Schema {
       username: "alex",
       email: "alex@alex.alex",
       password: "alex",
+      is_admin: true,
     });
   }
 
