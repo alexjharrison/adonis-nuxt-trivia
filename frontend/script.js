@@ -5,8 +5,8 @@ const data = {
   rounds: [
     {
       type: "standard",
-      imageIds: [1],
-      questionSet: [
+      imageIds: [],
+      questionSets: [
         {
           category: "Balls",
           questions: [
