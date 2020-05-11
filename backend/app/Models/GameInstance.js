@@ -4,7 +4,7 @@
 const Model = use("Model");
 
 class GameInstance extends Model {
-  createdBy() {
+  host() {
     return this.belongsTo("User");
   }
 

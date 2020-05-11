@@ -3,19 +3,25 @@
 const User = use("App/Models/User");
 
 class AuthController {
-  user = null;
-
   async login({ request, auth }) {
     const { email, password } = request.body;
     return auth.withRefreshToken().attempt(email, password);
   }
 
   async register({ request, auth }) {
-    this.user = await User.create(request.body);
+    const user = await User.create(request.body);
 
-    const userWithJwt = await auth.generate(this.user, true);
+    const userWithJwt = await auth.generate(user, true);
 
     return userWithJwt;
+  }
+
+  async logout() {
+    return {};
+  }
+
+  async user({ auth: { user } }) {
+    return { user };
   }
 }
 

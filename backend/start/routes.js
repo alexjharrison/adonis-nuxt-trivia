@@ -21,6 +21,8 @@ const Route = use("Route");
 Route.group(() => {
   Route.post("login", "AuthController.login");
   Route.post("register", "AuthController.register");
+  Route.post("logout", "AuthController.logout").middleware(["auth"]);
+  Route.get("user", "AuthController.user").middleware(["auth"]);
 }).prefix("auth");
 
 Route.resource("game-templates", "GameTemplateController")
