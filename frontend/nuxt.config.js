@@ -28,29 +28,33 @@ export default {
   /*
    ** Set global middleware
    */
-  middleware: 'auth',
+  router: {
+    middleware: ['auth']
+  },
 
   /*
    ** Config auth strategy
    */
   auth: {
-    local: {
-      endpoints: {
-        login: {
-          url: '/auth/login',
-          method: 'post',
-          propertyName: 'token'
-        },
-        logout: {
-          url: '/auth/logout',
-          method: 'post'
-        },
-        user: { url: '/auth/user', method: 'get', propertyName: 'user' }
-      },
-      redirect: {
-        login: '/login',
-        logout: '/',
-        home: '/dashboard'
+    redirect: {
+      login: '/login',
+      logout: '/',
+      home: '/dashboard'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/auth/login',
+            method: 'post',
+            propertyName: 'token'
+          },
+          logout: {
+            url: '/auth/logout',
+            method: 'post'
+          },
+          user: { url: '/auth/user', method: 'get', propertyName: 'user' }
+        }
       }
     }
   },
@@ -68,13 +72,17 @@ export default {
    ** Plugins to load before mounting the App
    */
 
-  plugins: ['@/plugins/universal-components.js'],
+  plugins: [
+    '@/plugins/universal-components.js',
+    { src: '@/plugins/vue-toasted.js', mode: 'client' }
+  ],
   /*
    ** Axios Config
    */
 
   axios: {
-    proxy: true
+    proxy: true,
+    prefix: '/api/'
   },
 
   /*

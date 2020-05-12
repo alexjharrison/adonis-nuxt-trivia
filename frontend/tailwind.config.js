@@ -7,7 +7,13 @@
 module.exports = {
   theme: {},
   variants: {},
-  plugins: [],
+  plugins: [
+    require('tailwindcss-animatecss')({
+      classes: ['animate__animated', 'animate__fadeIn', 'animate__bounceIn'],
+      settings: {},
+      variants: ['hover']
+    })
+  ],
   purge: {
     // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
     enabled: process.env.NODE_ENV === 'production',
