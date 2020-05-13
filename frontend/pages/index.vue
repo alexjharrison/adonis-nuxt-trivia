@@ -1,6 +1,10 @@
 <template>
   <main>
-    <h1>Home Page</h1>
+    <div class="container">
+      <h1 class="mt-5 text-5xl font-semibold text-center text-gray-700">
+        Trivia App Landing Page
+      </h1>
+    </div>
   </main>
 </template>
 

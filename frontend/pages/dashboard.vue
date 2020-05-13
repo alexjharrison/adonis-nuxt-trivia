@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <main class="container">
     <h1>My Dashboard</h1>
-  </div>
+    <n-link to="/templates">View My Created Games</n-link>
+  </main>
 </template>
 
 <script>

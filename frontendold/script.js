@@ -83,7 +83,7 @@ async function postData({ url = "", data = {} }) {
       "Content-Type": "application/json",
       // 'Content-Type': 'application/x-www-form-urlencoded',
       Authorization:
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU4OTA0NjU2M30.-Y0-u5tvKKgGYpICcVxvdxTtcdRqSDGJlg_awyiE40s",
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjEsImlhdCI6MTU4OTQwODQ2NX0.HN2Kuc4uf97_QmlnL26B7pxA4DFkN1IZ3E4lQ2SZovU",
     },
     redirect: "follow", // manual, *follow, error
     referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url

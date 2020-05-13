@@ -12,14 +12,9 @@ class GameTemplateController {
   // get all
   async index({ auth }) {
     if (auth.user.is_admin) {
-      return this.GameTemplate.query()
-        .with("rounds.questionSets.questions.answers")
-        .fetch();
+      return this.GameTemplate.query().fetch();
     } else
-      return this.GameTemplate.query()
-        .with("rounds.questionSets.questions.answers")
-        .where("user_id", 1)
-        .fetch();
+      return this.GameTemplate.query().where("user_id", auth.user.id).fetch();
   }
 
   // get one
