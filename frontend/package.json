@@ -23,7 +23,7 @@
     "vuelidate": "^0.7.5"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^2.0.2",
+    "@nuxtjs/eslint-config": "6.0.1",
     "@nuxtjs/eslint-module": "^1.2.0",
     "@nuxtjs/tailwindcss": "^1.4.1",
     "babel-eslint": "^10.1.0",
